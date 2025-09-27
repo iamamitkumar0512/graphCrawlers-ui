@@ -1,146 +1,65 @@
 'use client';
 
-import { useHypergraphApp, useHypergraphAuth } from '@graphprotocol/hypergraph-react';
-import Image from 'next/image';
-import Link from 'next/link';
-
-import { Button } from '@/Components/ui/button';
+import { useState } from 'react';
+import { Toggle } from '@/Components/ui/toggle';
+import { ParagraphsList } from '@/Components/ParagraphsList';
+import { PostsList } from '@/Components/PostsList';
+import { SpaceList } from '@/Components/SpaceList';
+import { useSpaces, useHypergraphAuth } from '@graphprotocol/hypergraph-react';
 
 export default function HomePage() {
-  const { redirectToConnect } = useHypergraphApp();
+  const [userType, setUserType] = useState('user');
   const { authenticated } = useHypergraphAuth();
+  const { data: privateSpaces, isPending } = useSpaces({ mode: 'private' });
 
-  const handleSignIn = () => {
-    redirectToConnect({
-      storage: localStorage,
-      connectUrl: 'https://connect.geobrowser.io/',
-      successUrl: `${window.location.origin}/authenticate-success`,
-      redirectFn: (url: URL) => {
-        window.location.href = url.toString();
-      },
-    });
-  };
+  console.log('authenticated:', authenticated);
+  console.log('private spaces', privateSpaces);
+
+  const toggleOptions = [
+    { value: 'user', label: 'User' },
+    { value: 'admin', label: 'Admin' },
+  ];
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="text-center mb-12">
-        <Image src="/hypergraph.svg" alt="Hypergraph Logo" width={96} height={96} className="w-24 h-24 mx-auto mb-4" />
-        <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-          Welcome to Hypergraph
-        </h1>
-        <p className="text-lg text-muted-foreground">Your web3 app template powered by Hypergraph</p>
-      </div>
-
-      <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {/* Section 1: Explore existing public knowledge */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg border border-gray-200 dark:border-gray-700">
-          <div className="text-center">
-            <div className="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center mx-auto mb-4">
-              <svg
-                className="w-6 h-6 text-gray-400 dark:text-gray-300"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-            </div>
-            <h3 className="text-xl font-semibold mb-3">Explore Public Knowledge</h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Discover and explore the vast network of knowledge already available in the public Knowledge Graph.
-            </p>
-            <Link href="/explore-public-knowledge">
-              <Button variant="outline" className="w-full">
-                Start Exploring
-              </Button>
-            </Link>
-          </div>
+      <div className="flex flex-col items-center justify-center min-h-[60vh] space-y-8">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-foreground mb-4">Select Your Role</h2>
+          <p className="text-muted-foreground mb-8">Choose whether you want to access as a user or admin</p>
         </div>
 
-        {/* Section 2: Conditional content based on authentication */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg border border-gray-200 dark:border-gray-700">
-          <div className="text-center">
-            <div className="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center mx-auto mb-4">
-              <svg
-                className="w-6 h-6 text-gray-400 dark:text-gray-300"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                />
-              </svg>
-            </div>
-            {authenticated ? (
-              <>
-                <h3 className="text-xl font-semibold mb-3">Go to Geo Connect</h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  Go to Geo Connect to manage your private data and publish it to the public Knowledge Graph.
-                </p>
-                <Button onClick={handleSignIn} className="w-full bg-primary hover:bg-primary/90">
-                  Go to Geo Connect
-                </Button>
-              </>
-            ) : (
-              <>
-                <h3 className="text-xl font-semibold mb-3">Manage Your Data</h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  Sign in with Geo Connect to manage your private data and publish it to the public Knowledge Graph.
-                </p>
-                <Button onClick={handleSignIn} className="w-full bg-primary hover:bg-primary/90">
-                  Sign in with Geo Connect
-                </Button>
-              </>
-            )}
-          </div>
-        </div>
+        <Toggle options={toggleOptions} value={userType} onChange={setUserType} className="w-fit" />
 
-        {/* Section 3: Explore the docs */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg border border-gray-200 dark:border-gray-700">
-          <div className="text-center">
-            <div className="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center mx-auto mb-4">
-              <svg
-                className="w-6 h-6 text-gray-400 dark:text-gray-300"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                />
-              </svg>
+        <div className="w-full space-y-8">
+          {userType === 'user' && (
+            <div className="space-y-8">
+              <SpaceList spaceType="public" title="Public Spaces" />
+              <PostsList mode="public" />
             </div>
-            <h3 className="text-xl font-semibold mb-3">Explore the Docs</h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Learn how to build with Hypergraph and discover all the features available in our comprehensive
-              documentation.
-            </p>
-            <a
-              href="https://docs.hypergraph.thegraph.com/docs/quickstart"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block w-full"
-            >
-              <Button variant="outline" className="w-full">
-                Read Documentation
-              </Button>
-            </a>
-          </div>
+          )}
+
+          {authenticated && userType === 'admin' && (
+            <div className="space-y-8">
+              <div className="bg-card border rounded-lg p-6 shadow-sm">
+                <h2 className="text-xl font-semibold text-card-foreground mb-4">
+                  Your Private Spaces ({privateSpaces?.length || 0})
+                </h2>
+                {privateSpaces && privateSpaces.length > 0 ? (
+                  <div className="space-y-2">
+                    {privateSpaces.map((space) => (
+                      <div key={space.id} className="border border-border rounded-lg p-4 bg-background">
+                        <h3 className="font-medium text-foreground">{space.name}</h3>
+                        <p className="text-xs text-muted-foreground">ID: {space.id}</p>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-muted-foreground">No private spaces found</p>
+                )}
+              </div>
+              {!isPending && <ParagraphsList spaceId={privateSpaces?.[0]?.id} />}
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -14,6 +14,7 @@ import { useState } from 'react';
 
 import { Project } from '@/app/schema';
 import { Button } from '../ui/button';
+import { PrivateSpaceParagraphs } from '../PrivateSpaceParagraphs';
 
 export function PrivateSpaceWrapper({ spaceid }: Readonly<{ spaceid: string }>) {
   return (
@@ -85,6 +86,11 @@ function PrivateSpace() {
           <h1 className="text-3xl font-bold text-slate-900">{name}</h1>
           <p className="text-slate-600 mt-1 text-sm">ID: {spaceId}</p>
           <p className="text-muted-foreground mt-6">Manage your private projects and publish them to public spaces</p>
+        </div>
+
+        {/* Paragraph Publishing Section */}
+        <div className="mb-8">
+          <PrivateSpaceParagraphs spaceId={spaceId} />
         </div>
 
         <div className="grid gap-8 lg:grid-cols-2">

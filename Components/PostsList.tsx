@@ -4,7 +4,11 @@ import { PostCard } from './PostCard';
 import { usePost } from '@/hooks/usePost';
 import { PostDataWithRelations } from '@/hooks/usePost';
 
+/**
+ * Props for the PostsList component
+ */
 interface PostsListProps {
+  /** Whether to display public or private posts */
   mode?: 'public' | 'private';
 }
 

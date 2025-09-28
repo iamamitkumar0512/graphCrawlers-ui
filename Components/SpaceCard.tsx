@@ -1,15 +1,38 @@
 'use client';
 
+/**
+ * Space interface for Hypergraph spaces
+ */
 interface Space {
+  /** Unique identifier for the space */
   id: string;
+  /** Display name of the space */
   name: string | undefined;
 }
 
+/**
+ * Props for the SpaceCard component
+ */
 interface SpaceCardProps {
+  /** The space data to display */
   space: Space;
+  /** Type of space (public or private) */
   spaceType: 'public' | 'private';
 }
 
+/**
+ * SpaceCard component displays information about a Hypergraph space
+ *
+ * This component:
+ * - Shows space name and type with appropriate styling
+ * - Displays the space ID in a monospace format
+ * - Provides visual distinction between public and private spaces
+ * - Uses responsive design with hover effects
+ *
+ * @param space - The space data to display
+ * @param spaceType - Whether the space is public or private
+ * @returns JSX element containing the space card
+ */
 export function SpaceCard({ space, spaceType }: SpaceCardProps) {
   return (
     <div className="w-full max-w-md bg-card border border-border rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-200 p-6">

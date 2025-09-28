@@ -3,30 +3,62 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Paragraph, ParagraphsResponse, Pagination } from './useCompanyData';
 
+/**
+ * Options for the useParagraphs hook
+ */
 export interface UseParagraphsOptions {
+  /** Name of the company to fetch paragraphs for */
   companyName?: string;
+  /** Page number for pagination */
   page?: number;
+  /** Number of paragraphs per page */
   limit?: number;
+  /** Platform to filter by (e.g., 'medium') */
   platform?: string;
+  /** Whether to filter by processed status */
   processed?: boolean;
+  /** Whether the query should be enabled */
   enabled?: boolean;
 }
 
+/**
+ * Return type for the useParagraphs hook
+ */
 export interface UseParagraphsReturn {
+  /** Array of paragraph data */
   paragraphs: Paragraph[];
+  /** Loading state */
   loading: boolean;
+  /** Error message if fetch fails */
   error: string | null;
+  /** Function to manually refetch paragraphs */
   refetch: () => void;
+  /** Pagination information */
   pagination: Pagination | null;
+  /** Whether there are more pages available */
   hasMore: boolean;
+  /** Current page number */
   currentPage: number;
+  /** Total number of pages */
   totalPages: number;
+  /** Total number of paragraphs */
   totalParagraphs: number;
 }
 
+/**
+ * Custom hook to fetch paragraphs for a specific company
+ *
+ * This hook manages the state and logic for fetching paragraph data from the backend API
+ * with filtering, pagination, and error handling support.
+ *
+ * @param options - Configuration options for the hook
+ * @returns Object containing paragraphs data, loading state, and utility functions
+ */
 export function useParagraphs(options: UseParagraphsOptions = {}): UseParagraphsReturn {
+  // Extract options with default values
   const { companyName = '', page = 1, limit = 100, platform = 'medium', processed = false, enabled = true } = options;
 
+  // State management for paragraphs data and UI states
   const [paragraphs, setParagraphs] = useState<Paragraph[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -100,7 +132,17 @@ export function useParagraphs(options: UseParagraphsOptions = {}): UseParagraphs
   };
 }
 
-// Hook to get all paragraphs from all companies
+/**
+ * Custom hook to fetch paragraphs from all companies
+ *
+ * This hook aggregates paragraph data from all companies by:
+ * 1. Fetching the list of all companies
+ * 2. Fetching paragraphs for each company
+ * 3. Combining all paragraphs into a single array
+ *
+ * @param options - Configuration options (excluding companyName)
+ * @returns Object containing all paragraphs data, loading state, and utility functions
+ */
 export function useAllParagraphs(options: Omit<UseParagraphsOptions, 'companyName'> = {}): UseParagraphsReturn {
   const [allParagraphs, setAllParagraphs] = useState<Paragraph[]>([]);
   const [loading, setLoading] = useState(false);

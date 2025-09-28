@@ -4,9 +4,25 @@ import { useHypergraphApp } from '@graphprotocol/hypergraph-react';
 
 import { Button } from '../ui/button';
 
+/**
+ * LoginButton component provides authentication via Geo Connect
+ *
+ * This component:
+ * - Uses Hypergraph's authentication system
+ * - Redirects to Geo Connect for wallet authentication
+ * - Handles the authentication flow with proper redirects
+ * - Provides a consistent login button interface
+ *
+ * @returns JSX element containing the login button
+ */
 export function LoginButton() {
+  // Get the redirect function from Hypergraph app context
   const { redirectToConnect } = useHypergraphApp();
 
+  /**
+   * Handles the sign-in process using Geo Connect
+   * Redirects to the Geo Connect service for wallet authentication
+   */
   const handleSignIn = () => {
     redirectToConnect({
       storage: localStorage,

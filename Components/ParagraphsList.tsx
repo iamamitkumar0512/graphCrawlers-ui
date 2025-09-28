@@ -4,16 +4,40 @@ import { useAllParagraphs } from '@/hooks/useParagraphs';
 import { ParagraphCard } from './ParagraphCard';
 import { Button } from '@/Components/ui/button';
 
+/**
+ * Props for the ParagraphsList component
+ */
 interface ParagraphsListProps {
+  /** Optional space ID for publishing operations */
   spaceId?: string;
 }
 
+/**
+ * ParagraphsList component displays all company paragraphs with management capabilities
+ *
+ * This component:
+ * - Fetches all paragraphs from the backend API
+ * - Shows loading and error states
+ * - Displays company filtering information
+ * - Provides publish and view functionality for each paragraph
+ * - Handles empty states when no paragraphs are found
+ *
+ * @param spaceId - The Hypergraph space ID for publishing operations
+ * @returns JSX element containing the paragraphs list
+ */
 export function ParagraphsList({ spaceId }: ParagraphsListProps) {
+  // Fetch all paragraphs data with filtering
   const { paragraphs, loading, error, refetch, totalParagraphs } = useAllParagraphs({
     platform: 'medium',
     processed: false,
   });
 
+  /**
+   * Handles publishing a paragraph to Hypergraph
+   * Currently shows a placeholder implementation
+   *
+   * @param paragraphId - The ID of the paragraph to publish
+   */
   const handlePublish = async (paragraphId: string) => {
     try {
       // Here you would implement your publish logic
@@ -30,6 +54,12 @@ export function ParagraphsList({ spaceId }: ParagraphsListProps) {
     }
   };
 
+  /**
+   * Handles viewing a paragraph
+   * Currently shows a placeholder implementation
+   *
+   * @param paragraphId - The ID of the paragraph to view
+   */
   const handleView = (paragraphId: string) => {
     console.log('Viewing paragraph:', paragraphId);
     // You could implement a modal or navigation here

@@ -3,14 +3,34 @@
 import { useSpaces } from '@graphprotocol/hypergraph-react';
 import { SpaceCard } from './SpaceCard';
 
+/**
+ * Props for the SpaceList component
+ */
 interface SpaceListProps {
+  /** Type of spaces to display (public or private) */
   spaceType: 'public' | 'private';
+  /** Optional title for the space list section */
   title?: string;
 }
 
+/**
+ * SpaceList component displays a list of Hypergraph spaces
+ *
+ * This component:
+ * - Fetches spaces from Hypergraph based on the specified type
+ * - Shows loading state while fetching data
+ * - Displays empty state when no spaces are found
+ * - Renders spaces in a responsive grid layout using SpaceCard components
+ *
+ * @param spaceType - Whether to show public or private spaces
+ * @param title - Optional title for the section
+ * @returns JSX element containing the space list
+ */
 export function SpaceList({ spaceType, title }: SpaceListProps) {
+  // Fetch spaces data from Hypergraph
   const { data: spaces, isPending } = useSpaces({ mode: spaceType });
 
+  // Show loading state with spinner
   if (isPending) {
     return (
       <div className="flex items-center justify-center py-8">
@@ -22,6 +42,7 @@ export function SpaceList({ spaceType, title }: SpaceListProps) {
     );
   }
 
+  // Show empty state when no spaces are found
   if (!spaces || spaces.length === 0) {
     return (
       <div className="text-center py-8">
@@ -30,6 +51,7 @@ export function SpaceList({ spaceType, title }: SpaceListProps) {
     );
   }
 
+  // Render the space list with title and grid layout
   return (
     <div className="space-y-6">
       {title && <h2 className="text-2xl font-bold text-foreground">{title}</h2>}

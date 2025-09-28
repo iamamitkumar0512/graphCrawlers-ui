@@ -92,7 +92,7 @@ export function useHypergraphPublish(): UseHypergraphPublishReturn {
         // Call API to mark paragraph as processed
         try {
           const response = await fetch(
-            `http://localhost:3000/api/companies/${paragraphData.companyName}/paragraphs/${paragraph.id}/process`,
+            `http://localhost:3000/api/companies/${paragraphData.companyName}/paragraphs/${paragraphData._id}/process`,
             {
               method: 'PATCH',
               headers: {

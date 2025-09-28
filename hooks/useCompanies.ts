@@ -70,10 +70,10 @@ export interface UseCompaniesReturn {
 
 /**
  * Custom hook to fetch companies data from the backend API
- * 
+ *
  * This hook manages the state and logic for fetching company data with pagination support.
  * It handles loading states, error handling, and provides a refetch function.
- * 
+ *
  * @param options - Configuration options for the hook
  * @returns Object containing companies data, loading state, and utility functions
  */

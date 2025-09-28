@@ -4,8 +4,13 @@ import Image from 'next/image';
 import { Button } from '@/Components/ui/button';
 import { PostDataWithRelations } from '@/hooks/usePost';
 
+/**
+ * Props for the PostCard component
+ */
 interface PostCardProps {
+  /** The post data to display */
   post: PostDataWithRelations;
+  /** Optional callback function when viewing the post */
   onView?: (post: PostDataWithRelations) => void;
 }
 

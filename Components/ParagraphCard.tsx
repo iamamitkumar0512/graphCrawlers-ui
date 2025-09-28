@@ -8,42 +8,74 @@ import { HypergraphSpaceProvider } from '@graphprotocol/hypergraph-react';
 import { usePost } from '@/hooks';
 import { useCompanies } from '@/hooks/useCompanies';
 
+/**
+ * Props for the ParagraphCard component
+ */
 interface ParagraphCardProps {
+  /** The paragraph data to display */
   paragraph: Paragraph;
+  /** Callback function called when paragraph is successfully published */
   onPublish?: (paragraphId: string) => void;
+  /** Callback function called when viewing the paragraph */
   onView?: (paragraphId: string) => void;
+  /** The space ID for publishing operations */
   spaceId?: string;
 }
 
+/**
+ * ParagraphCard component displays a paragraph with publish functionality
+ * 
+ * This component renders a card showing paragraph data from company sources (like Medium)
+ * and provides functionality to publish the paragraph to both private and public Hypergraph spaces.
+ * It includes validation to ensure the company has a public space before publishing.
+ * 
+ * @param paragraph - The paragraph data to display and potentially publish
+ * @param onPublish - Optional callback when paragraph is successfully published
+ * @param spaceId - The private space ID for publishing operations
+ * @returns JSX element containing the paragraph card
+ */
 export function ParagraphCard({ paragraph, onPublish, spaceId }: ParagraphCardProps) {
+  // Local state for managing publish operation
   const [isPublishing, setIsPublishing] = useState(false);
+  
+  // Hook for publishing to Hypergraph
   const { publishParagraph, isPublishing: hypergraphPublishing, error } = useHypergraphPublish();
+  
+  // Fetch public posts for debugging/logging purposes
   const { data: posts, isPending } = usePost({ mode: 'public' });
 
+  // Fetch companies data to validate public space availability
   const { companies } = useCompanies();
 
   console.log('posts', posts, isPending);
 
+  /**
+   * Handles the publish operation for the paragraph
+   * Validates prerequisites and publishes to both private and public spaces
+   */
   const handlePublish = async () => {
+    // Validate that spaceId is provided
     if (!spaceId) {
       alert('No space ID provided for publishing');
       return;
     }
 
     // Find the company that matches this paragraph's company name
-
     const company = companies.find((c) => c.companyName.toLowerCase() === paragraph.companyName.toLowerCase());
     console.log(paragraph, company);
+    
     if (!company) {
       alert(`No company found for ${paragraph.companyName}. Cannot publish to public space.`);
       return;
     }
 
+    // Validate that the company has a public space ID
     if (!company.publicSpaceId) {
       alert(`No public space ID found for ${paragraph.companyName}. Cannot publish to public space.`);
       return;
     }
 
+    // Set loading state and attempt to publish
     setIsPublishing(true);
     try {
       // Publish to both private and public spaces
@@ -63,10 +95,15 @@ export function ParagraphCard({ paragraph, onPublish, spaceId }: ParagraphCardPr
       console.error('Error publishing paragraph:', err);
       alert('Failed to publish paragraph');
     } finally {
+      // Always reset loading state
       setIsPublishing(false);
     }
   };
 
+  /**
+   * Handles viewing the original post
+   * Opens the original post URL in a new tab
+   */
   const handleView = () => {
     // Default behavior: open the original post
     window.open(paragraph.postData.url, '_blank', 'noopener,noreferrer');

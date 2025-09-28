@@ -14,10 +14,10 @@ interface PostsListProps {
 
 /**
  * PostsList component displays a grid of posts with filtering and loading states
- * 
+ *
  * This component fetches posts from Hypergraph and transforms them into a consistent format
  * for display. It handles loading states and provides an empty state when no posts are found.
- * 
+ *
  * @param mode - Whether to display public or private posts (defaults to 'public')
  * @returns JSX element containing the posts list
  */

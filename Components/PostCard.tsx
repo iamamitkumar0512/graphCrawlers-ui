@@ -14,7 +14,22 @@ interface PostCardProps {
   onView?: (post: PostDataWithRelations) => void;
 }
 
+/**
+ * PostCard component displays a single post in a card format
+ * 
+ * This component renders a post with its featured image, title, excerpt, author info,
+ * metrics, and action buttons. It handles image loading errors gracefully and provides
+ * a clean, responsive design.
+ * 
+ * @param post - The post data to display
+ * @param onView - Optional callback when the post is viewed
+ * @returns JSX element containing the post card
+ */
 export function PostCard({ post, onView }: PostCardProps) {
+  /**
+   * Handles viewing the post
+   * Uses the provided callback or opens the post URL in a new tab
+   */
   const handleView = () => {
     if (onView) {
       onView(post);
@@ -24,6 +39,11 @@ export function PostCard({ post, onView }: PostCardProps) {
     }
   };
 
+  /**
+   * Formats a date string to a readable format
+   * @param dateString - The date string to format
+   * @returns Formatted date string
+   */
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',

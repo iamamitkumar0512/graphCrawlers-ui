@@ -45,10 +45,10 @@ export function PrivateSpaceParagraphs({ spaceId }: PrivateSpaceParagraphsProps)
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
         <h3 className="text-sm font-medium text-blue-900 mb-2">How to publish paragraphs:</h3>
         <ul className="text-sm text-blue-800 space-y-1">
-          <li>• Click "Show Paragraphs" to view available content</li>
+          <li>• Click &quot;Show Paragraphs&quot; to view available content</li>
           <li>• Each paragraph card shows content from your scraped data</li>
-          <li>• Click "Publish to Hypergraph & Public Space" to store the content in both private and public spaces</li>
-          <li>• The system will automatically find the company's public space and publish there as well</li>
+          <li>• Click &quot;Publish to Hypergraph &amp; Public Space&quot; to store the content in both private and public spaces</li>
+          <li>• The system will automatically find the company&apos;s public space and publish there as well</li>
           <li>• The data will be structured according to your schema (Paragraph → PostData → Author/Metrics)</li>
         </ul>
       </div>

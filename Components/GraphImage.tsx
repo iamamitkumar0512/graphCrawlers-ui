@@ -10,5 +10,5 @@ function getImageUrl(src: string | undefined | Blob) {
 export function GraphImage(
   props: React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>,
 ) {
-  return <img {...props} src={getImageUrl(props.src)} />;
+  return <img {...props} src={getImageUrl(props.src)} alt={props.alt || ''} />;
 }

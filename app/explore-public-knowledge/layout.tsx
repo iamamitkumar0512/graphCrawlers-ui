@@ -1,5 +1,3 @@
-import { ExploreTabs } from '../../Components/explore-tabs';
-
 export default function ExplorePublicKnowledgeLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="container mx-auto px-4 py-8">
@@ -19,8 +17,6 @@ export default function ExplorePublicKnowledgeLayout({ children }: { children: R
           . No authentication is required.
         </p>
       </div>
-
-      <ExploreTabs />
 
       <div className="mt-12">{children}</div>
     </div>

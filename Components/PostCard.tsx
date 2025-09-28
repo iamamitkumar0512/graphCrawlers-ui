@@ -16,11 +16,11 @@ interface PostCardProps {
 
 /**
  * PostCard component displays a single post in a card format
- * 
+ *
  * This component renders a post with its featured image, title, excerpt, author info,
  * metrics, and action buttons. It handles image loading errors gracefully and provides
  * a clean, responsive design.
- * 
+ *
  * @param post - The post data to display
  * @param onView - Optional callback when the post is viewed
  * @returns JSX element containing the post card

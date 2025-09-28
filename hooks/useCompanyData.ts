@@ -163,9 +163,9 @@ export function useCompanyData(options: UseCompanyDataOptions = {}): UseCompanyD
             const paragraphs = await fetchCompanyParagraphs(company.companyName);
 
             // Calculate aggregated metrics
-            const totalClaps = paragraphs.reduce((sum, p) => sum + p.metrics.claps, 0);
-            const totalViews = paragraphs.reduce((sum, p) => sum + p.metrics.views, 0);
-            const totalComments = paragraphs.reduce((sum, p) => sum + p.metrics.comments, 0);
+            const totalClaps = paragraphs.reduce((sum, p) => sum + p.postData.metrics.claps, 0);
+            const totalViews = paragraphs.reduce((sum, p) => sum + p.postData.metrics.views, 0);
+            const totalComments = paragraphs.reduce((sum, p) => sum + p.postData.metrics.comments, 0);
 
             return {
               ...company,

@@ -47,7 +47,11 @@ function PrivateSpace() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    createProject({ name: projectName, description: projectDescription });
+    createProject({
+      name: projectName,
+      description: projectDescription,
+      xUrl: '', // Default empty string for xUrl as it's required by the schema
+    });
     setProjectName('');
     setProjectDescription('');
   };

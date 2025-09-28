@@ -9,20 +9,20 @@ import { useSpaces, useHypergraphAuth } from '@graphprotocol/hypergraph-react';
 
 /**
  * HomePage component - Main landing page of the application
- * 
+ *
  * This component provides a role-based interface where users can switch between
  * 'user' and 'admin' modes. In user mode, it displays public spaces and posts.
  * In admin mode (when authenticated), it shows private spaces and paragraph management.
- * 
+ *
  * @returns JSX element containing the home page layout
  */
 export default function HomePage() {
   // State for managing the current user role (user or admin)
   const [userType, setUserType] = useState('user');
-  
+
   // Hypergraph authentication state
   const { authenticated } = useHypergraphAuth();
-  
+
   // Fetch private spaces data (only used in admin mode)
   const { data: privateSpaces, isPending } = useSpaces({ mode: 'private' });
 
